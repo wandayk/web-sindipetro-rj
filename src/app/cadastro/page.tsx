@@ -2,6 +2,7 @@
 
 import { StepIndicator } from "@/components/ui/StepIndicator";
 import { Button } from "@/components/ui/Button";
+import { Header } from "@/components/layout/Header";
 import { DadosPessoais } from "@/components/steps/DadosPessoais";
 import { DadosContato } from "@/components/steps/DadosContato";
 import { DadosEndereco } from "@/components/steps/DadosEndereco";
@@ -34,17 +35,7 @@ export default function CadastroPage() {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      {/* Header */}
-      <header className="bg-brand-primary text-white py-6 shadow-md">
-        <div className="mx-auto max-w-2xl px-4">
-          <h1 className="font-display text-2xl sm:text-3xl font-bold text-center">
-            Sindicato dos Trabalhadores
-          </h1>
-          <p className="text-brand-primary-light text-center mt-1 text-lg">
-            Filiação Online
-          </p>
-        </div>
-      </header>
+      <Header />
 
       {/* Indicador de progresso */}
       <div className="bg-white border-b border-gray-200">

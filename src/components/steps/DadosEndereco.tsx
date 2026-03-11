@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Input } from "../ui/Input";
 import { Select } from "../ui/Select";
 import { maskCEP } from "@/lib/masks";
@@ -50,12 +50,15 @@ export function DadosEndereco({
 }: DadosEnderecoProps) {
   const [loadingCep, setLoadingCep] = useState(false);
   const [cepError, setCepError] = useState("");
+  const lastFetchedCep = useRef("");
 
   // Busca endereço quando o CEP tem 8 dígitos
   useEffect(() => {
     const cleanedCep = data.cep?.replace(/\D/g, "") || "";
 
-    if (cleanedCep.length === 8) {
+    // Evita buscar o mesmo CEP novamente
+    if (cleanedCep.length === 8 && cleanedCep !== lastFetchedCep.current) {
+      lastFetchedCep.current = cleanedCep;
       setLoadingCep(true);
       setCepError("");
 
@@ -77,7 +80,8 @@ export function DadosEndereco({
           setLoadingCep(false);
         });
     }
-  }, [data.cep, onChange]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [data.cep]);
 
   const isAddressFieldsDisabled = loadingCep || !data.cep || data.cep.replace(/\D/g, "").length < 8;
 

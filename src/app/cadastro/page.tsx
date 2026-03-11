@@ -3,6 +3,8 @@
 import { StepIndicator } from "@/components/ui/StepIndicator";
 import { Button } from "@/components/ui/Button";
 import { DadosPessoais } from "@/components/steps/DadosPessoais";
+import { DadosContato } from "@/components/steps/DadosContato";
+import { DadosEndereco } from "@/components/steps/DadosEndereco";
 import { useFormSteps } from "@/hooks/useFormSteps";
 
 const STEP_TITLES = {
@@ -71,7 +73,23 @@ export default function CadastroPage() {
             />
           )}
 
-          {currentStep > 1 && (
+          {currentStep === 2 && (
+            <DadosContato
+              data={formData}
+              errors={errors}
+              onChange={updateField}
+            />
+          )}
+
+          {currentStep === 3 && (
+            <DadosEndereco
+              data={formData}
+              errors={errors}
+              onChange={updateField}
+            />
+          )}
+
+          {currentStep > 3 && (
             <div className="text-center py-12 text-gray-500">
               Etapa {currentStep} em construção...
             </div>

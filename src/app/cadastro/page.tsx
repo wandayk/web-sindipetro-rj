@@ -7,6 +7,7 @@ import { DadosContato } from "@/components/steps/DadosContato";
 import { DadosEndereco } from "@/components/steps/DadosEndereco";
 import { DadosProfissionais } from "@/components/steps/DadosProfissionais";
 import { Resumo } from "@/components/steps/Resumo";
+import { CodigoConfirmacao } from "@/components/steps/CodigoConfirmacao";
 import { useFormSteps } from "@/hooks/useFormSteps";
 
 const STEP_TITLES = {
@@ -101,33 +102,43 @@ export default function CadastroPage() {
 
           {currentStep === 5 && <Resumo data={formData} />}
 
-          {currentStep > 5 && (
+          {currentStep === 6 && (
+            <CodigoConfirmacao
+              data={formData}
+              onConfirm={nextStep}
+              onBack={prevStep}
+            />
+          )}
+
+          {currentStep > 6 && (
             <div className="text-center py-12 text-gray-500">
               Etapa {currentStep} em construção...
             </div>
           )}
         </div>
 
-        {/* Botões de navegação */}
-        <div className="flex flex-col gap-3">
-          <Button
-            onClick={nextStep}
-            variant={currentStep === 5 ? "success" : "primary"}
-            icon={currentStep === 5 ? "🔒" : undefined}
-          >
-            {currentStep === 5
-              ? "Confirmar dados e assinar"
-              : currentStep === totalSteps
-                ? "Finalizar"
-                : "Próximo"}
-          </Button>
-
-          {currentStep > 1 && (
-            <Button onClick={prevStep} variant="secondary">
-              Voltar
+        {/* Botões de navegação - apenas para etapas 1-5 */}
+        {currentStep < 6 && (
+          <div className="flex flex-col gap-3">
+            <Button
+              onClick={nextStep}
+              variant={currentStep === 5 ? "success" : "primary"}
+              icon={currentStep === 5 ? "🔒" : undefined}
+            >
+              {currentStep === 5
+                ? "Confirmar dados e assinar"
+                : currentStep === totalSteps
+                  ? "Finalizar"
+                  : "Próximo"}
             </Button>
-          )}
-        </div>
+
+            {currentStep > 1 && (
+              <Button onClick={prevStep} variant="secondary">
+                Voltar
+              </Button>
+            )}
+          </div>
+        )}
       </main>
     </div>
   );

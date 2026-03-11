@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import { useRouter } from "next/navigation";
 import { Button } from "../ui/Button";
 import { OtpInput } from "../ui/OtpInput";
 import { useOtp } from "@/hooks/useOtp";
@@ -17,11 +18,11 @@ export function CodigoConfirmacao({
   onConfirm,
   onBack,
 }: CodigoConfirmacaoProps) {
+  const router = useRouter();
   const {
     otpSent,
     otpValue,
     setOtpValue,
-    timer,
     formatTimer,
     loading,
     error,
@@ -38,7 +39,8 @@ export function CodigoConfirmacao({
   const handleVerifyOtp = async () => {
     const isValid = await verifyOtp();
     if (isValid) {
-      onConfirm();
+      // Redireciona para a página de sucesso com o WhatsApp
+      router.push(`/cadastro/sucesso?whatsapp=${encodeURIComponent(data.whatsapp || "")}`);
     }
   };
 

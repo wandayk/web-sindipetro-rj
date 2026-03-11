@@ -6,6 +6,7 @@ import { DadosPessoais } from "@/components/steps/DadosPessoais";
 import { DadosContato } from "@/components/steps/DadosContato";
 import { DadosEndereco } from "@/components/steps/DadosEndereco";
 import { DadosProfissionais } from "@/components/steps/DadosProfissionais";
+import { Resumo } from "@/components/steps/Resumo";
 import { useFormSteps } from "@/hooks/useFormSteps";
 
 const STEP_TITLES = {
@@ -98,7 +99,9 @@ export default function CadastroPage() {
             />
           )}
 
-          {currentStep > 4 && (
+          {currentStep === 5 && <Resumo data={formData} />}
+
+          {currentStep > 5 && (
             <div className="text-center py-12 text-gray-500">
               Etapa {currentStep} em construção...
             </div>
@@ -107,8 +110,16 @@ export default function CadastroPage() {
 
         {/* Botões de navegação */}
         <div className="flex flex-col gap-3">
-          <Button onClick={nextStep} variant="primary">
-            {currentStep === totalSteps ? "Finalizar" : "Próximo"}
+          <Button
+            onClick={nextStep}
+            variant={currentStep === 5 ? "success" : "primary"}
+            icon={currentStep === 5 ? "🔒" : undefined}
+          >
+            {currentStep === 5
+              ? "Confirmar dados e assinar"
+              : currentStep === totalSteps
+                ? "Finalizar"
+                : "Próximo"}
           </Button>
 
           {currentStep > 1 && (

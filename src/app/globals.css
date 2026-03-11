@@ -1,26 +1,37 @@
 @import "tailwindcss";
 
+@theme inline {
+  /* Tamanhos de fonte customizados para acessibilidade */
+  --font-size-body: 18px;
+  --font-size-label: 16px;
+  --font-size-heading: 28px;
+  --font-size-button: 18px;
+
+  /* Cores do tema do sindicato */
+  --color-brand-primary: #1A56A8;
+  --color-brand-primary-hover: #14437F;
+  --color-brand-primary-light: #E8F0FE;
+  --color-brand-accent: #0E8A5F;
+  --color-brand-accent-light: #E6F6EF;
+  --color-brand-error: #C23B22;
+  --color-brand-error-light: #FDECEA;
+  --color-brand-warning: #B8860B;
+  --color-brand-warning-light: #FFF8E1;
+
+  /* Fonte padrão */
+  --font-sans: "Source Sans 3", system-ui, -apple-system, sans-serif;
+  --font-display: "Libre Baskerville", serif;
+}
+
 :root {
   --background: #ffffff;
   --foreground: #171717;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-sans);
+  font-size: 18px;
+  line-height: 1.6;
 }

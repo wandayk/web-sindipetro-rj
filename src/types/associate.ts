@@ -22,8 +22,10 @@ export interface AssociateFormData {
   state: string;
 
   // Dados Profissionais
-  companyName: string;
-  companyCnpj: string;
-  jobTitle: string;
+  company: string;
+  allocation: string;
+  building: string;
+  registration: string;
   admissionDate: string;
+  jobTitle: string;
 }

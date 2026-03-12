@@ -55,77 +55,133 @@ function isValidDate(dateStr: string): boolean {
 
 // Schema para dados pessoais
 export const personalDataSchema = z.object({
-  fullName: z
-    .string()
-    .min(3, "Informe seu nome completo")
-    .regex(/\s/, "Informe nome e sobrenome"),
-  cpf: z
-    .string()
-    .min(1, "Informe seu CPF")
-    .refine(isValidCPF, "CPF inválido"),
-  rg: z.string().min(1, "Informe seu RG"),
-  birthDate: z
-    .string()
-    .min(1, "Informe sua data de nascimento")
-    .refine(isValidDate, "Data inválida"),
-  gender: z.enum(["M", "F", "OTHER"], {
-    message: "Selecione o sexo",
-  }),
-  maritalStatus: z.string().min(1, "Selecione o estado civil"),
-});
+  fullName: z.preprocess(
+    (val) => val || "",
+    z
+      .string()
+      .min(3, "Informe seu nome completo")
+      .regex(/\s/, "Informe nome e sobrenome")
+  ),
+  cpf: z.preprocess(
+    (val) => val || "",
+    z
+      .string()
+      .min(1, "Informe seu CPF")
+      .refine(isValidCPF, "CPF inválido")
+  ),
+  rg: z.preprocess((val) => val || "", z.string().min(1, "Informe seu RG")),
+  birthDate: z.preprocess(
+    (val) => val || "",
+    z
+      .string()
+      .min(1, "Informe sua data de nascimento")
+      .refine(isValidDate, "Data inválida")
+  ),
+  gender: z.preprocess(
+    (val) => val || "",
+    z.enum(["M", "F", "OTHER"], {
+      message: "Selecione o sexo",
+    })
+  ),
+  maritalStatus: z.preprocess(
+    (val) => val || "",
+    z.string().min(1, "Selecione o estado civil")
+  ),
+}).passthrough();
 
 // Schema para dados de contato
 export const contactDataSchema = z.object({
-  phone: z
-    .string()
-    .min(1, "Informe seu telefone")
-    .refine((val) => {
-      const cleaned = val.replace(/\D/g, "");
-      return cleaned.length === 10 || cleaned.length === 11;
-    }, "Telefone inválido"),
-  whatsapp: z
-    .string()
-    .min(1, "Informe seu WhatsApp")
-    .refine((val) => {
-      const cleaned = val.replace(/\D/g, "");
-      return cleaned.length === 10 || cleaned.length === 11;
-    }, "WhatsApp inválido"),
-  email: z.string().email("Informe um e-mail válido"),
-});
+  phone: z.preprocess(
+    (val) => val || "",
+    z
+      .string()
+      .min(1, "Informe seu telefone")
+      .refine((val) => {
+        const cleaned = val.replace(/\D/g, "");
+        return cleaned.length === 10 || cleaned.length === 11;
+      }, "Telefone inválido")
+  ),
+  whatsapp: z.preprocess(
+    (val) => val || "",
+    z
+      .string()
+      .min(1, "Informe seu WhatsApp")
+      .refine((val) => {
+        const cleaned = val.replace(/\D/g, "");
+        return cleaned.length === 10 || cleaned.length === 11;
+      }, "WhatsApp inválido")
+  ),
+  email: z.preprocess(
+    (val) => val || "",
+    z.string().email("Informe um e-mail válido")
+  ),
+}).passthrough();
 
 // Schema para dados de endereço
 export const addressDataSchema = z.object({
-  cep: z
-    .string()
-    .min(1, "Informe o CEP")
-    .refine((val) => {
-      const cleaned = val.replace(/\D/g, "");
-      return cleaned.length === 8;
-    }, "CEP inválido"),
-  street: z.string().min(1, "Informe o logradouro"),
-  number: z.string().min(1, "Informe o número"),
-  complement: z.union([z.string(), z.undefined()]).optional(),
-  neighborhood: z.string().min(1, "Informe o bairro"),
-  city: z.string().min(1, "Informe a cidade"),
-  state: z.string().min(1, "Informe o estado").refine(
-    (val) => val.length === 2,
-    "Estado deve ter 2 caracteres"
+  cep: z.preprocess(
+    (val) => val || "",
+    z
+      .string()
+      .min(1, "Informe o CEP")
+      .refine((val) => {
+        const cleaned = val.replace(/\D/g, "");
+        return cleaned.length === 8;
+      }, "CEP inválido")
   ),
-});
+  street: z.preprocess(
+    (val) => val || "",
+    z.string().min(1, "Informe o logradouro")
+  ),
+  number: z.preprocess(
+    (val) => val || "",
+    z.string().min(1, "Informe o número")
+  ),
+  complement: z.preprocess((val) => val || "", z.string()).optional(),
+  neighborhood: z.preprocess(
+    (val) => val || "",
+    z.string().min(1, "Informe o bairro")
+  ),
+  city: z.preprocess(
+    (val) => val || "",
+    z.string().min(1, "Informe a cidade")
+  ),
+  state: z.preprocess(
+    (val) => val || "",
+    z.string().min(1, "Informe o estado").refine(
+      (val) => val.length === 2,
+      "Estado deve ter 2 caracteres"
+    )
+  ),
+}).passthrough();
 
 // Schema para dados profissionais
 export const professionalDataSchema = z.object({
-  companyName: z.string().min(1, "Informe o nome da empresa"),
-  companyCnpj: z
-    .string()
-    .min(1, "Informe o CNPJ da empresa")
-    .refine((val) => {
-      const cleaned = val.replace(/\D/g, "");
-      return cleaned.length === 14;
-    }, "CNPJ inválido"),
-  jobTitle: z.string().min(1, "Informe seu cargo"),
-  admissionDate: z
-    .string()
-    .min(1, "Informe a data de admissão")
-    .refine(isValidDate, "Data inválida"),
-});
+  company: z.preprocess(
+    (val) => val || "",
+    z.string().min(1, "Informe a empresa")
+  ),
+  allocation: z.preprocess(
+    (val) => val || "",
+    z.string().min(1, "Informe a lotação")
+  ),
+  building: z.preprocess(
+    (val) => val || "",
+    z.string().min(1, "Informe o prédio/unidade")
+  ),
+  registration: z.preprocess(
+    (val) => val || "",
+    z.string().min(1, "Informe a matrícula")
+  ),
+  admissionDate: z.preprocess(
+    (val) => val || "",
+    z
+      .string()
+      .min(1, "Informe a data de admissão")
+      .refine(isValidDate, "Data inválida")
+  ),
+  jobTitle: z.preprocess(
+    (val) => val || "",
+    z.string().min(1, "Informe o cargo")
+  ),
+}).passthrough();

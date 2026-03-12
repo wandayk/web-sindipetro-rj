@@ -113,10 +113,12 @@ export function Resumo({ data }: ResumoProps) {
           Dados Profissionais
         </h3>
         <div className="space-y-1">
-          <DataRow label="Empresa" value={data.companyName} />
-          <DataRow label="CNPJ" value={data.companyCnpj} />
-          <DataRow label="Cargo/Função" value={data.jobTitle} />
+          <DataRow label="Empresa" value={data.company} />
+          <DataRow label="Lotação" value={data.allocation} />
+          <DataRow label="Prédio/Unidade" value={data.building} />
+          <DataRow label="Matrícula" value={data.registration} />
           <DataRow label="Data de admissão" value={data.admissionDate} />
+          <DataRow label="Cargo" value={data.jobTitle} />
         </div>
       </section>
 

@@ -2,7 +2,7 @@
 
 import React from "react";
 import { Input } from "../ui/Input";
-import { maskCNPJ, maskDate } from "@/lib/masks";
+import { maskDate } from "@/lib/masks";
 import { AssociateFormData } from "@/types/associate";
 
 interface DadosProfissionaisProps {
@@ -19,35 +19,44 @@ export function DadosProfissionais({
   return (
     <div className="space-y-5">
       <Input
-        label="Nome da empresa"
+        label="Empresa"
         required
-        value={data.companyName || ""}
-        onChange={(e) => onChange("companyName", e.target.value)}
-        error={errors.companyName}
+        value={data.company || ""}
+        onChange={(e) => onChange("company", e.target.value)}
+        error={errors.company}
         placeholder="Digite o nome da empresa"
         autoComplete="organization"
       />
 
       <Input
-        label="CNPJ da empresa"
+        label="Lotação"
         required
-        value={data.companyCnpj || ""}
-        onChange={(e) => onChange("companyCnpj", e.target.value)}
-        error={errors.companyCnpj}
-        mask={maskCNPJ}
-        placeholder="00.000.000/0000-00"
-        inputMode="numeric"
+        value={data.allocation || ""}
+        onChange={(e) => onChange("allocation", e.target.value)}
+        error={errors.allocation}
+        placeholder="Digite a lotação"
         autoComplete="off"
       />
 
       <Input
-        label="Cargo/Função"
+        label="Prédio/Unidade"
         required
-        value={data.jobTitle || ""}
-        onChange={(e) => onChange("jobTitle", e.target.value)}
-        error={errors.jobTitle}
-        placeholder="Digite seu cargo ou função"
-        autoComplete="organization-title"
+        value={data.building || ""}
+        onChange={(e) => onChange("building", e.target.value)}
+        error={errors.building}
+        placeholder="Digite o prédio ou unidade"
+        autoComplete="off"
+      />
+
+      <Input
+        label="Matrícula"
+        required
+        value={data.registration || ""}
+        onChange={(e) => onChange("registration", e.target.value)}
+        error={errors.registration}
+        placeholder="Digite sua matrícula"
+        inputMode="numeric"
+        autoComplete="off"
       />
 
       <Input
@@ -60,6 +69,16 @@ export function DadosProfissionais({
         placeholder="DD/MM/AAAA"
         inputMode="numeric"
         autoComplete="off"
+      />
+
+      <Input
+        label="Cargo"
+        required
+        value={data.jobTitle || ""}
+        onChange={(e) => onChange("jobTitle", e.target.value)}
+        error={errors.jobTitle}
+        placeholder="Digite seu cargo"
+        autoComplete="organization-title"
       />
     </div>
   );

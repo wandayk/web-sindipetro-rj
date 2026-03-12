@@ -69,7 +69,7 @@ export const personalDataSchema = z.object({
     .min(1, "Informe sua data de nascimento")
     .refine(isValidDate, "Data inválida"),
   gender: z.enum(["M", "F", "OTHER"], {
-    required_error: "Selecione o sexo",
+    message: "Selecione o sexo",
   }),
   maritalStatus: z.string().min(1, "Selecione o estado civil"),
 });
@@ -104,10 +104,13 @@ export const addressDataSchema = z.object({
     }, "CEP inválido"),
   street: z.string().min(1, "Informe o logradouro"),
   number: z.string().min(1, "Informe o número"),
-  complement: z.string().optional(),
+  complement: z.union([z.string(), z.undefined()]).optional(),
   neighborhood: z.string().min(1, "Informe o bairro"),
   city: z.string().min(1, "Informe a cidade"),
-  state: z.string().length(2, "Informe o estado"),
+  state: z.string().min(1, "Informe o estado").refine(
+    (val) => val.length === 2,
+    "Estado deve ter 2 caracteres"
+  ),
 });
 
 // Schema para dados profissionais

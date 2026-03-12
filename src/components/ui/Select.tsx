@@ -30,7 +30,7 @@ export function Select({
     <div className="w-full">
       <label
         htmlFor={selectId}
-        className="block text-[17px] font-semibold text-gray-800 mb-2"
+        className="block text-label font-semibold text-gray-700 mb-2"
       >
         {label}
         {required && <span className="text-brand-error ml-1">*</span>}
@@ -40,17 +40,18 @@ export function Select({
         <select
           id={selectId}
           className={`
-            w-full px-4 py-4 text-lg rounded-xl border-2
+            w-full px-4 py-3 pr-10
+            text-body font-medium
+            border-2 rounded-lg
             appearance-none cursor-pointer
             transition-all duration-200
             ${
               error
-                ? "border-brand-error bg-brand-error-light focus:border-brand-error focus:ring-4 focus:ring-brand-error/20"
-                : "border-gray-300 bg-white focus:border-brand-primary focus:ring-4 focus:ring-brand-primary/20"
+                ? "border-brand-error focus:border-brand-error focus:ring-4 focus:ring-brand-error-light"
+                : "border-gray-300 bg-white focus:border-brand-primary focus:ring-4 focus:ring-brand-primary-light"
             }
             disabled:bg-gray-100 disabled:cursor-not-allowed disabled:text-gray-500
             outline-none
-            min-h-[48px]
             ${className}
           `}
           aria-required={required}
@@ -67,7 +68,7 @@ export function Select({
         </select>
 
         {/* Seta customizada */}
-        <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none">
+        <div className="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none text-gray-500">
           <svg
             width="20"
             height="20"
@@ -88,16 +89,14 @@ export function Select({
       </div>
 
       {error && (
-        <div
+        <p
           id={errorId}
-          className="flex items-start gap-2 mt-2 text-brand-error"
+          className="mt-2 text-sm text-brand-error flex items-center gap-1"
           role="alert"
         >
-          <span className="text-lg" aria-hidden="true">
-            ⚠️
-          </span>
-          <span className="text-[15px] font-medium">{error}</span>
-        </div>
+          <span aria-hidden="true">⚠️</span>
+          {error}
+        </p>
       )}
     </div>
   );

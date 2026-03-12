@@ -8,15 +8,15 @@
   --font-size-button: 18px;
 
   /* Cores do tema do sindicato */
-  --color-brand-primary: #1A56A8;
-  --color-brand-primary-hover: #14437F;
-  --color-brand-primary-light: #E8F0FE;
-  --color-brand-accent: #0E8A5F;
-  --color-brand-accent-light: #E6F6EF;
-  --color-brand-error: #C23B22;
-  --color-brand-error-light: #FDECEA;
-  --color-brand-warning: #B8860B;
-  --color-brand-warning-light: #FFF8E1;
+  --color-brand-primary: #6d0201;
+  --color-brand-primary-hover: #4a0101;
+  --color-brand-primary-light: #fef2f2;
+  --color-brand-accent: #8b0301;
+  --color-brand-accent-light: #fee2e2;
+  --color-brand-error: #dc2626;
+  --color-brand-error-light: #fef2f2;
+  --color-brand-warning: #ea580c;
+  --color-brand-warning-light: #ffedd5;
 
   /* Fonte padrão */
   --font-sans: "Source Sans 3", system-ui, -apple-system, sans-serif;
@@ -34,4 +34,39 @@ body {
   font-family: var(--font-sans);
   font-size: 18px;
   line-height: 1.6;
+}
+
+/* Estilos customizados para react-day-picker */
+.rdp-custom {
+  --rdp-accent-color: #6d0201;
+  --rdp-background-color: #fef2f2;
+}
+
+.rdp-custom .rdp-month_caption {
+  font-weight: 700;
+  color: #6d0201;
+  margin-bottom: 0.5rem;
+}
+
+.rdp-custom .rdp-day_button {
+  border-radius: 0.375rem;
+  font-weight: 500;
+}
+
+.rdp-custom .rdp-day_button:hover:not(.rdp-selected) {
+  background-color: #fef2f2;
+}
+
+.rdp-custom .rdp-selected {
+  background-color: #6d0201 !important;
+  color: white !important;
+}
+
+.rdp-custom .rdp-selected:hover {
+  background-color: #4a0101 !important;
+}
+
+.rdp-custom .rdp-today {
+  font-weight: 700;
+  border: 2px solid #6d0201;
 }

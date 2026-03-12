@@ -2,7 +2,7 @@
 
 import React from "react";
 import { Input } from "../ui/Input";
-import { maskDate } from "@/lib/masks";
+import { DateInput } from "../ui/DateInput";
 import { AssociateFormData } from "@/types/associate";
 
 interface DadosProfissionaisProps {
@@ -59,16 +59,15 @@ export function DadosProfissionais({
         autoComplete="off"
       />
 
-      <Input
+      <DateInput
         label="Data de admissão"
         required
         value={data.admissionDate || ""}
-        onChange={(e) => onChange("admissionDate", e.target.value)}
+        onChange={(value) => onChange("admissionDate", value)}
         error={errors.admissionDate}
-        mask={maskDate}
         placeholder="DD/MM/AAAA"
-        inputMode="numeric"
-        autoComplete="off"
+        maxDate={new Date()}
+        minDate={new Date(1950, 0, 1)}
       />
 
       <Input

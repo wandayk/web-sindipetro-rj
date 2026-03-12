@@ -1,6 +1,5 @@
 "use client";
 
-import { StepIndicator } from "@/components/ui/StepIndicator";
 import { Button } from "@/components/ui/Button";
 import { Header } from "@/components/layout/Header";
 import { DadosPessoais } from "@/components/steps/DadosPessoais";
@@ -35,101 +34,102 @@ export default function CadastroPage() {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <Header />
+      {/* Header com Steps integrado */}
+      <Header 
+        currentStep={currentStep} 
+        totalSteps={totalSteps} 
+        showSteps={true}
+      />
 
-      {/* Indicador de progresso */}
-      <div className="bg-white border-b border-gray-200">
-        <div className="mx-auto max-w-2xl px-4">
-          <StepIndicator currentStep={currentStep} totalSteps={totalSteps} />
-        </div>
-      </div>
-
-      {/* Conteúdo principal */}
-      <main className="mx-auto max-w-2xl px-4 py-8">
-        {/* Título da etapa */}
-        <div className="text-center mb-8">
-          <div className="text-5xl mb-3" aria-hidden="true">
-            {stepInfo.icon}
+      {/* Conteúdo principal com bordas arredondadas no topo (estilo mobile app) */}
+      <main className="relative -mt-6 mx-auto max-w-2xl px-4 mb-6">
+        <div className="bg-white border-black/10 border rounded-4xl shadow-2xl min-h-[calc(100vh-280px)] pt-8 pb-8 px-4 sm:px-8">
+          
+          {/* Título da etapa */}
+          <div className="text-center mb-8">
+            <div className="text-5xl mb-3" aria-hidden="true">
+              {stepInfo.icon}
+            </div>
+            <h2 className="text-heading font-display font-bold text-gray-900">
+              {stepInfo.title}
+            </h2>
+            <p className="text-gray-600 mt-2">{stepInfo.subtitle}</p>
           </div>
-          <h2 className="text-heading font-display font-bold text-gray-900">
-            {stepInfo.title}
-          </h2>
-          <p className="text-gray-600 mt-2">{stepInfo.subtitle}</p>
-        </div>
 
-        {/* Card do formulário */}
-        <div className="bg-white rounded-2xl shadow-lg p-6 sm:p-8 mb-6">
-          {currentStep === 1 && (
-            <DadosPessoais
-              data={formData}
-              errors={errors}
-              onChange={updateField}
-            />
-          )}
+          {/* Formulário */}
+          <div className="mb-6">
+            {currentStep === 1 && (
+              <DadosPessoais
+                data={formData}
+                errors={errors}
+                onChange={updateField}
+              />
+            )}
 
-          {currentStep === 2 && (
-            <DadosContato
-              data={formData}
-              errors={errors}
-              onChange={updateField}
-            />
-          )}
+            {currentStep === 2 && (
+              <DadosContato
+                data={formData}
+                errors={errors}
+                onChange={updateField}
+              />
+            )}
 
-          {currentStep === 3 && (
-            <DadosEndereco
-              data={formData}
-              errors={errors}
-              onChange={updateField}
-            />
-          )}
+            {currentStep === 3 && (
+              <DadosEndereco
+                data={formData}
+                errors={errors}
+                onChange={updateField}
+              />
+            )}
 
-          {currentStep === 4 && (
-            <DadosProfissionais
-              data={formData}
-              errors={errors}
-              onChange={updateField}
-            />
-          )}
+            {currentStep === 4 && (
+              <DadosProfissionais
+                data={formData}
+                errors={errors}
+                onChange={updateField}
+              />
+            )}
 
-          {currentStep === 5 && <Resumo data={formData} />}
+            {currentStep === 5 && <Resumo data={formData} />}
 
-          {currentStep === 6 && (
-            <CodigoConfirmacao
-              data={formData}
-              onConfirm={nextStep}
-              onBack={prevStep}
-            />
-          )}
+            {currentStep === 6 && (
+              <CodigoConfirmacao
+                data={formData}
+                onConfirm={nextStep}
+                onBack={prevStep}
+              />
+            )}
 
-          {currentStep > 6 && (
-            <div className="text-center py-12 text-gray-500">
-              Etapa {currentStep} em construção...
+            {currentStep > 6 && (
+              <div className="text-center py-12 text-gray-500">
+                Etapa {currentStep} em construção...
+              </div>
+            )}
+          </div>
+
+          {/* Botões de navegação - apenas para etapas 1-5 */}
+          {currentStep < 6 && (
+            <div className="flex flex-col gap-3 mt-8">
+              <Button
+                onClick={nextStep}
+                variant={currentStep === 5 ? "success" : "primary"}
+                icon={currentStep === 5 ? "🔒" : undefined}
+              >
+                {currentStep === 5
+                  ? "Confirmar dados e assinar"
+                  : currentStep === totalSteps
+                    ? "Finalizar"
+                    : "Próximo"}
+              </Button>
+
+              {currentStep > 1 && (
+                <Button onClick={prevStep} variant="secondary">
+                  Voltar
+                </Button>
+              )}
             </div>
           )}
         </div>
-
-        {/* Botões de navegação - apenas para etapas 1-5 */}
-        {currentStep < 6 && (
-          <div className="flex flex-col gap-3">
-            <Button
-              onClick={nextStep}
-              variant={currentStep === 5 ? "success" : "primary"}
-              icon={currentStep === 5 ? "🔒" : undefined}
-            >
-              {currentStep === 5
-                ? "Confirmar dados e assinar"
-                : currentStep === totalSteps
-                  ? "Finalizar"
-                  : "Próximo"}
-            </Button>
-
-            {currentStep > 1 && (
-              <Button onClick={prevStep} variant="secondary">
-                Voltar
-              </Button>
-            )}
-          </div>
-        )}
       </main>
     </div>
   );

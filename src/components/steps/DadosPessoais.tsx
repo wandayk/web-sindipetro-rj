@@ -3,7 +3,8 @@
 import React from "react";
 import { Input } from "../ui/Input";
 import { Select } from "../ui/Select";
-import { maskCPF, maskDate } from "@/lib/masks";
+import { DateInput } from "../ui/DateInput";
+import { maskCPF } from "@/lib/masks";
 import { AssociateFormData } from "@/types/associate";
 
 interface DadosPessoaisProps {
@@ -65,16 +66,15 @@ export function DadosPessoais({
         autoComplete="off"
       />
 
-      <Input
+      <DateInput
         label="Data de nascimento"
         required
         value={data.birthDate || ""}
-        onChange={(e) => onChange("birthDate", e.target.value)}
+        onChange={(value) => onChange("birthDate", value)}
         error={errors.birthDate}
-        mask={maskDate}
         placeholder="DD/MM/AAAA"
-        inputMode="numeric"
-        autoComplete="bday"
+        maxDate={new Date()}
+        minDate={new Date(1900, 0, 1)}
       />
 
       <Select

@@ -110,7 +110,6 @@ export default function CadastroPage() {
               <Button
                 onClick={nextStep}
                 variant={currentStep === 5 ? "success" : "primary"}
-                icon={currentStep === 5 ? "🔒" : undefined}
               >
                 {currentStep === 5
                   ? "Confirmar dados e assinar"

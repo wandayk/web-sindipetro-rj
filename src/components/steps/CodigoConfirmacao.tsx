@@ -145,7 +145,6 @@ export function CodigoConfirmacao({
         <Button
           onClick={handleVerifyOtp}
           variant="success"
-          icon="🔒"
           loading={loading}
           disabled={otpValue.length !== 6 || loading}
         >

@@ -22,10 +22,16 @@ export interface AssociateFormData {
   state: string;
 
   // Dados Profissionais
+  workerStatus: "ACTIVE" | "RETIRED";
   company: string;
   allocation: string;
   building: string;
   registration: string;
   admissionDate: string;
   jobTitle: string;
+
+  // Dados Profissionais - Aposentado (condicionais)
+  petrosRegistration?: string;
+  benefitCode?: string;
+  retirementDate?: string;
 }

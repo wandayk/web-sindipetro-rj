@@ -28,6 +28,14 @@ function formatMaritalStatus(status?: string): string {
   return status ? statusMap[status] || status : "";
 }
 
+function formatWorkerStatus(status?: string): string {
+  const statusMap: Record<string, string> = {
+    ACTIVE: "Trabalhador Ativo",
+    RETIRED: "Aposentado",
+  };
+  return status ? statusMap[status] || status : "";
+}
+
 function formatAddress(data: Partial<AssociateFormData>): string {
   const parts = [];
   if (data.street) parts.push(data.street);
@@ -113,12 +121,28 @@ export function Resumo({ data }: ResumoProps) {
           Dados Profissionais
         </h3>
         <div className="space-y-1">
+          <DataRow label="Tipo" value={formatWorkerStatus(data.workerStatus)} />
           <DataRow label="Empresa" value={data.company} />
           <DataRow label="Lotação" value={data.allocation} />
           <DataRow label="Prédio/Unidade" value={data.building} />
           <DataRow label="Matrícula" value={data.registration} />
           <DataRow label="Data de admissão" value={data.admissionDate} />
           <DataRow label="Cargo" value={data.jobTitle} />
+
+          {/* Campos específicos de aposentado */}
+          {data.workerStatus === "RETIRED" && (
+            <>
+              <DataRow
+                label="Matrícula PETROS"
+                value={data.petrosRegistration}
+              />
+              <DataRow label="Código de Benefício" value={data.benefitCode} />
+              <DataRow
+                label="Data da Aposentadoria"
+                value={data.retirementDate}
+              />
+            </>
+          )}
         </div>
       </section>
 

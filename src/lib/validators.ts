@@ -156,7 +156,13 @@ export const addressDataSchema = z.object({
 }).passthrough();
 
 // Schema para dados profissionais
-export const professionalDataSchema = z.object({
+const baseProfessionalSchema = z.object({
+  workerStatus: z.preprocess(
+    (val) => val || "",
+    z.enum(["ACTIVE", "RETIRED"], {
+      message: "Selecione o tipo de trabalhador",
+    })
+  ),
   company: z.preprocess(
     (val) => val || "",
     z.string().min(1, "Informe a empresa")
@@ -184,4 +190,49 @@ export const professionalDataSchema = z.object({
     (val) => val || "",
     z.string().min(1, "Informe o cargo")
   ),
-}).passthrough();
+  // Campos opcionais de aposentado
+  petrosRegistration: z.preprocess((val) => val || "", z.string()).optional(),
+  benefitCode: z.preprocess((val) => val || "", z.string()).optional(),
+  retirementDate: z.preprocess((val) => val || "", z.string()).optional(),
+});
+
+// Schema com validação condicional
+export const professionalDataSchema = baseProfessionalSchema.superRefine(
+  (data, ctx) => {
+    // Se é aposentado, validar campos adicionais
+    if (data.workerStatus === "RETIRED") {
+      // Validar petrosRegistration
+      if (!data.petrosRegistration || data.petrosRegistration.trim() === "") {
+        ctx.addIssue({
+          code: "custom",
+          message: "Informe a matrícula PETROS",
+          path: ["petrosRegistration"],
+        });
+      }
+
+      // Validar benefitCode
+      if (!data.benefitCode || data.benefitCode.trim() === "") {
+        ctx.addIssue({
+          code: "custom",
+          message: "Informe o código de benefício",
+          path: ["benefitCode"],
+        });
+      }
+
+      // Validar retirementDate
+      if (!data.retirementDate || data.retirementDate.trim() === "") {
+        ctx.addIssue({
+          code: "custom",
+          message: "Informe a data da aposentadoria",
+          path: ["retirementDate"],
+        });
+      } else if (!isValidDate(data.retirementDate)) {
+        ctx.addIssue({
+          code: "custom",
+          message: "Data inválida",
+          path: ["retirementDate"],
+        });
+      }
+    }
+  }
+);

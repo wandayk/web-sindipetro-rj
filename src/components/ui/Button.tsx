@@ -40,7 +40,7 @@ export function Button({
     `,
     success: `
       bg-brand-accent text-white
-      hover:bg-[#0c7450]
+      hover:bg-brand-primary-hover
       focus:ring-brand-accent/30
       disabled:hover:bg-brand-accent
     `,

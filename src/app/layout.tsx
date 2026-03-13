@@ -20,7 +20,10 @@ export const metadata: Metadata = {
   title: "Filiação Sindical Online",
   description: "Sistema de cadastro de filiação sindical com assinatura eletrônica",
   viewport: "width=device-width, initial-scale=1",
-  themeColor: "#1A56A8",
+  themeColor: "#6d0201",
+  icons: {
+    icon: "/fvicon.png",
+  },
 };
 
 export default function RootLayout({

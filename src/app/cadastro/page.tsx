@@ -42,22 +42,19 @@ export default function CadastroPage() {
       />
 
       {/* Conteúdo principal com bordas arredondadas no topo (estilo mobile app) */}
-      <main className="relative -mt-6 mx-auto max-w-2xl px-4 mb-6">
-        <div className="bg-white border-black/10 border rounded-4xl shadow-2xl min-h-[calc(100vh-280px)] pt-8 pb-8 px-4 sm:px-8">
+      <main className="relative -mt-18 mx-auto max-w-2xl px-4 mb-6">
+        <div className="bg-white border-black/10 border rounded-4xl shadow-2xl min-h-[calc(100vh-280px)] pt-8 pb-8  ">
           
           {/* Título da etapa */}
-          <div className="text-center mb-8">
-            <div className="text-5xl mb-3" aria-hidden="true">
-              {stepInfo.icon}
-            </div>
-            <h2 className="text-heading font-display font-bold text-gray-900">
+          <div className="text-center mb-4 pb-4 px-4 sm:px-8 pt-8">
+            <h2 className="leading-0 text-3xl font-bold text-gray-900">
               {stepInfo.title}
             </h2>
             <p className="text-gray-600 mt-2">{stepInfo.subtitle}</p>
           </div>
 
           {/* Formulário */}
-          <div className="mb-6">
+          <div className="mb-6 px-4 sm:px-8">
             {currentStep === 1 && (
               <DadosPessoais
                 data={formData}
@@ -109,7 +106,7 @@ export default function CadastroPage() {
 
           {/* Botões de navegação - apenas para etapas 1-5 */}
           {currentStep < 6 && (
-            <div className="flex flex-col gap-3 mt-8">
+            <div className="flex flex-col gap-3 mt-8 px-4 sm:px-8">
               <Button
                 onClick={nextStep}
                 variant={currentStep === 5 ? "success" : "primary"}

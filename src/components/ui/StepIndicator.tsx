@@ -54,7 +54,7 @@ export function StepIndicator({
                     isDark
                       ? isCompleted || isCurrent
                         ? "bg-white text-brand-primary ring-4 ring-white/30"
-                        : "bg-white/40 text-white"
+                        : "bg-white/40 text-black/30 border border-black/5"
                       : isCompleted
                         ? "bg-brand-accent text-white"
                         : isCurrent
@@ -79,7 +79,7 @@ export function StepIndicator({
       </div>
 
       {/* Indicador textual para acessibilidade */}
-      <p className={`text-center mt-4 text-sm ${isDark ? "text-white/90" : "text-gray-600"}`}>
+      <p className={`text-center mt-4 text-sm font-bold ${isDark ? "text-brand-primary" : "text-gray-600"}`}>
         Etapa {currentStep} de {totalSteps}
       </p>
     </div>

@@ -1,20 +1,22 @@
 "use client";
 
+import { useSearchParams } from "next/navigation";
 import { Suspense } from "react";
 import { Header } from "@/components/layout/Header";
 
 function SuccessContent() {
+  const searchParams = useSearchParams();
+  const protocolo = searchParams.get("protocolo");
+
   return (
     <div className="min-h-screen bg-gray-50">
       <Header />
 
-      {/* Conteúdo principal com bordas arredondadas no topo (estilo mobile app) */}
       <main className="relative -mt-18 mx-auto max-w-2xl px-4 mb-6">
         <div className="bg-white border-black/10 border rounded-4xl shadow-2xl min-h-[calc(100vh-280px)] pt-16 pb-16 px-6">
 
-          {/* Ícone de sucesso */}
           <div className="text-center py-12">
-            <div className="inline-flex items-center justify-center w-32 h-32 bg-linear-to-br from-brand-accent to-brand-accent/80 rounded-full mb-8 animate-scale-in shadow-lg">
+            <div className="inline-flex items-center justify-center w-32 h-32 bg-linear-to-br from-brand-accent to-brand-accent/80 rounded-full mb-8 shadow-lg">
               <svg
                 className="w-20 h-20 text-white"
                 fill="none"
@@ -37,6 +39,15 @@ function SuccessContent() {
             <p className="text-lg text-gray-600 max-w-md mx-auto leading-relaxed">
               Seus dados foram enviados com sucesso. Em breve você receberá a confirmação da sua filiação.
             </p>
+
+            {protocolo && (
+              <div className="mt-8 inline-block bg-gray-50 border border-gray-200 rounded-2xl px-6 py-4">
+                <p className="text-sm text-gray-500 mb-1">Número de protocolo</p>
+                <p className="text-xl font-mono font-bold text-brand-primary tracking-wider">
+                  {protocolo}
+                </p>
+              </div>
+            )}
           </div>
 
         </div>

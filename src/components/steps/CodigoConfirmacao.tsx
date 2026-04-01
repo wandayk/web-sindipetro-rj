@@ -1,11 +1,12 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import { Button } from "../ui/Button";
 import { OtpInput } from "../ui/OtpInput";
 import { useOtp } from "@/hooks/useOtp";
 import { AssociateFormData } from "@/types/associate";
+import { submitFiliacao } from "@/lib/api";
 
 interface CodigoConfirmacaoProps {
   data: Partial<AssociateFormData>;
@@ -19,6 +20,8 @@ export function CodigoConfirmacao({
   onBack,
 }: CodigoConfirmacaoProps) {
   const router = useRouter();
+  const [submitting, setSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState<string | null>(null);
   const {
     otpSent,
     otpValue,
@@ -38,9 +41,19 @@ export function CodigoConfirmacao({
 
   const handleVerifyOtp = async () => {
     const isValid = await verifyOtp();
-    if (isValid) {
-      // Redireciona para a página de sucesso com o WhatsApp
-      router.push(`/cadastro/sucesso?whatsapp=${encodeURIComponent(data.whatsapp || "")}`);
+    if (!isValid) return;
+
+    setSubmitting(true);
+    setSubmitError(null);
+    try {
+      const resultado = await submitFiliacao(data);
+      router.push(
+        `/cadastro/sucesso?protocolo=${encodeURIComponent(resultado.protocolo)}&whatsapp=${encodeURIComponent(data.whatsapp || "")}`
+      );
+    } catch {
+      setSubmitError("Não foi possível enviar sua filiação. Por favor, tente novamente.");
+    } finally {
+      setSubmitting(false);
     }
   };
 
@@ -113,9 +126,9 @@ export function CodigoConfirmacao({
         />
       </div>
 
-      {error && (
+      {(error || submitError) && (
         <div className="text-center text-brand-error font-medium">
-          {error}
+          {error || submitError}
         </div>
       )}
 
@@ -145,13 +158,13 @@ export function CodigoConfirmacao({
         <Button
           onClick={handleVerifyOtp}
           variant="success"
-          loading={loading}
-          disabled={otpValue.length !== 6 || loading}
+          loading={loading || submitting}
+          disabled={otpValue.length !== 6 || loading || submitting}
         >
-          Confirmar e Assinar
+          {submitting ? "Enviando..." : "Confirmar e Assinar"}
         </Button>
 
-        <Button onClick={onBack} variant="secondary" disabled={loading}>
+        <Button onClick={onBack} variant="secondary" disabled={loading || submitting}>
           Voltar
         </Button>
       </div>

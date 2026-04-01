@@ -22,7 +22,7 @@ export const metadata: Metadata = {
   viewport: "width=device-width, initial-scale=1",
   themeColor: "#6d0201",
   icons: {
-    icon: "/fvicon.png",
+    icon: "/web-sindipetro-rj/fvicon.png",
   },
 };
 
